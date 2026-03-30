@@ -17,6 +17,7 @@ public class Comment {
     @JoinColumn(name = "article_id")
     private Article article;
 
+    @Column(nullable = false)
     private String content;
 
     private LocalDateTime createdAt;

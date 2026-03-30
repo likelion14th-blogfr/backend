@@ -12,17 +12,19 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
     private String content;
 
     private LocalDateTime createdAt;
 
-    private Integer commentCount;
+    private int commentCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Integer likeCount;
+    private int likeCount;
 }
