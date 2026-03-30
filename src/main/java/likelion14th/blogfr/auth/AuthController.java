@@ -1,8 +1,8 @@
-package likelion14th.blogfr.user;
+package likelion14th.blogfr.auth;
 
-import likelion14th.blogfr.user.dto.ApiResponse;
-import likelion14th.blogfr.user.dto.LoginRequest;
-import likelion14th.blogfr.user.dto.LoginResponse;
+import likelion14th.blogfr.global.dto.ApiResponse;
+import likelion14th.blogfr.auth.dto.LoginRequest;
+import likelion14th.blogfr.auth.dto.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +24,6 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ApiResponse<String> logout(){
-        return ApiResponse.of(true, HttpStatus.OK.value(), "로그아웃 성공", "logout success");
+        return ApiResponse.of(true, HttpStatus.OK.value(), "로그아웃 되었습니다.", "logout success");
     }
 }

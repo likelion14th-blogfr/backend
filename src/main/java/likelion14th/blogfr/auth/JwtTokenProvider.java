@@ -1,4 +1,4 @@
-package likelion14th.blogfr.user;
+package likelion14th.blogfr.auth;
 
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package likelion14th.blogfr.user.dto;
+package likelion14th.blogfr.global.dto;
 
 public record ApiResponse<T>(
         boolean success,

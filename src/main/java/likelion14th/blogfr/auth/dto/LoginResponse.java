@@ -1,4 +1,4 @@
-package likelion14th.blogfr.user.dto;
+package likelion14th.blogfr.auth.dto;
 
 public record LoginResponse(
         String accessToken,
