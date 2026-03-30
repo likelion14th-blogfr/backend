@@ -3,9 +3,14 @@ package likelion14th.blogfr.comment;
 import jakarta.persistence.*;
 import likelion14th.blogfr.article.Article;
 import likelion14th.blogfr.user.User;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Comment {
 
