@@ -17,7 +17,7 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
-        User user = userRepository.findByUsername(request.username())
+        User user = userRepository.findByLoginId(request.loginId())
                 .orElseThrow(() -> new CustomException(404, "존재하지 않는 사용자입니다."));
 
         if (!user.getPassword().equals(request.password())) {
@@ -29,7 +29,7 @@ public class AuthService {
         return new LoginResponse(
                 accessToken,
                 user.getId(),
-                user.getUsername()
+                user.getLoginId()
         );
     }
 }
