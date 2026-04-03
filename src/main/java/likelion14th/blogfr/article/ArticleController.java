@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/articles")
 public class ArticleController {
 
-    @PostMapping
+    @PostMapping()
     public ApiResponse<String> createArticle(@RequestBody ArticleCreateRequest request){
         return ApiResponse.of(true, HttpStatus.OK.value(), "게시글 등록 성공", null);
     }
