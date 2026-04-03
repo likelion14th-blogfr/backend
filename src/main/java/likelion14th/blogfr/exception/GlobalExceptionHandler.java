@@ -12,6 +12,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<Void>> handleCustomException(CustomException e) {
         return ResponseEntity
                 .status(e.getCode())
-                .body(ApiResponse.of(false, e.getCode(), e.getMessage(), null));
+                .body(new ApiResponse<>(false, e.getCode(), e.getMessage(), null));
     }
 }
