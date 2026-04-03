@@ -1,4 +1,4 @@
-package likelion14th.blogfr.user;
+package likelion14th.blogfr.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

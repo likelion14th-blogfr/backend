@@ -1,6 +1,5 @@
-package likelion14th.blogfr.article.dto;
+package likelion14th.blogfr.dto.request;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

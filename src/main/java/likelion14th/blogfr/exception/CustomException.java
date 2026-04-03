@@ -1,4 +1,4 @@
-package likelion14th.blogfr.global.exception;
+package likelion14th.blogfr.exception;
 
 import lombok.Getter;
 

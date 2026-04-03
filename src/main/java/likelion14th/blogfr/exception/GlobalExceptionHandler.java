@@ -1,6 +1,6 @@
-package likelion14th.blogfr.global.exception;
+package likelion14th.blogfr.exception;
 
-import likelion14th.blogfr.global.dto.ApiResponse;
+import likelion14th.blogfr.dto.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
