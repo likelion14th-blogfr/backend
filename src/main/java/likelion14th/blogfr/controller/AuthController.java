@@ -6,6 +6,7 @@ import likelion14th.blogfr.dto.request.LoginRequest;
 import likelion14th.blogfr.dto.response.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +20,18 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ApiResponse<LoginResponse> login(@RequestBody LoginRequest request){
+    public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody LoginRequest request) {
         LoginResponse response = authService.login(request);
-        return new ApiResponse<>(true, HttpStatus.OK.value(), "로그인 성공", response);    }
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, HttpStatus.OK.value(), "로그인 성공", response));
+    }
 
     @PostMapping("/logout")
-    public ApiResponse<String> logout(){
-        return new ApiResponse<>(true, HttpStatus.OK.value(), "로그아웃 되었습니다.", "logout success");
+    public ResponseEntity<ApiResponse<String>> logout(){
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, HttpStatus.OK.value(), "로그아웃 되었습니다.", "logout success")
+        );
     }
 }
