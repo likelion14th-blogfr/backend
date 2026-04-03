@@ -16,7 +16,7 @@ public class ArticleResponse {
     private final Long id;
     private final String title;
     private final String content;
-    private final User user;
+    private final String author;
     private final LocalDateTime createdAt;
     private final Integer likes;
     private final Integer comments;
@@ -26,7 +26,7 @@ public class ArticleResponse {
                 .id(article.getId())
                 .title(article.getTitle())
                 .content(article.getContent())
-                .user(article.getUser())
+                .author(article.getUser().getNickname())
                 .createdAt(article.getCreatedAt())
                 .likes(article.getLikeCount())
                 .comments(article.getCommentCount())

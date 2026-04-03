@@ -40,4 +40,12 @@ public class Article {
         this.user = user;
         this.likeCount = likeCount;
     }
+
+    public void increaseCommentCount() {
+        this.commentCount += 1;
+    }
+
+    public void decreaseCommentCount() {
+        this.commentCount -= 1;
+    }
 }

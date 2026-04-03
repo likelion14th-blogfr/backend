@@ -2,7 +2,7 @@ package likelion14th.blogfr.service;
 
 import likelion14th.blogfr.domain.Article;
 import likelion14th.blogfr.domain.User;
-import likelion14th.blogfr.dto.request.ArticleCreateRequest;
+import likelion14th.blogfr.dto.request.AddArticleRequest;
 import likelion14th.blogfr.dto.response.ArticleResponse;
 import likelion14th.blogfr.exception.CustomException;
 import likelion14th.blogfr.repository.ArticleRepository;
@@ -17,7 +17,7 @@ public class ArticleService {
     private final UserRepository userRepository;
 
     /* 게시글 생성 */
-    public ArticleResponse addArticle(ArticleCreateRequest request){
+    public ArticleResponse addArticle(AddArticleRequest request){
 
         User user = userRepository.findById(1L)
                 .orElseThrow(()-> new CustomException(404, "사용자를 찾을 수 없습니다."));
