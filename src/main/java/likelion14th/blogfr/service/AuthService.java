@@ -1,10 +1,11 @@
-package likelion14th.blogfr.auth;
+package likelion14th.blogfr.service;
 
-import likelion14th.blogfr.global.exception.CustomException;
-import likelion14th.blogfr.user.User;
-import likelion14th.blogfr.user.UserRepository;
-import likelion14th.blogfr.auth.dto.LoginRequest;
-import likelion14th.blogfr.auth.dto.LoginResponse;
+import likelion14th.blogfr.config.JwtTokenProvider;
+import likelion14th.blogfr.exception.CustomException;
+import likelion14th.blogfr.domain.User;
+import likelion14th.blogfr.repository.UserRepository;
+import likelion14th.blogfr.dto.request.LoginRequest;
+import likelion14th.blogfr.dto.response.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
