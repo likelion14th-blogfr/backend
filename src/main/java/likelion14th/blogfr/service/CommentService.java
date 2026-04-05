@@ -23,6 +23,8 @@ public class CommentService {
     private final ArticleRepository articleRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+    /* 댓글 작성 */
+    @Transactional
     public CommentResponse addComment(Long articleId, AddCommentRequest request){
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new CustomException(404, "게시글이 존재하지 않습니다."));
@@ -39,6 +41,8 @@ public class CommentService {
         return CommentResponse.of(comment);
     }
 
+    /* 댓글 삭제 */
+    @Transactional
     public void deleteComment(Long commentId, String authorization){
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(()-> new CustomException(404, "댓글이 존재하지 않습니다."));

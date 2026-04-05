@@ -1,5 +1,6 @@
 package likelion14th.blogfr.service;
 
+import jakarta.transaction.Transactional;
 import likelion14th.blogfr.config.JwtTokenProvider;
 import likelion14th.blogfr.domain.Article;
 import likelion14th.blogfr.domain.User;
@@ -20,6 +21,7 @@ public class ArticleService {
     private final JwtTokenProvider jwtTokenProvider;
 
     /* 게시글 생성 */
+    @Transactional
     public ArticleResponse addArticle(AddArticleRequest request){
 
         User user = userRepository.findById(1L)
@@ -38,6 +40,7 @@ public class ArticleService {
     }
 
     /* 게시글 수정 */
+    @Transactional
     public ArticleResponse updateArticle(Long articleId, UpdateArticleRequest request, String authorization){
         Article article=articleRepository.findById(articleId)
                 .orElseThrow(()->new CustomException(404,"해당 ID의 게시글을 찾을 수 없습니다."));
@@ -50,5 +53,20 @@ public class ArticleService {
 
         article.update(request.getTitle(),request.getContent());
         return ArticleResponse.of(article);
+    }
+
+    /* 게시글 삭제 */
+    @Transactional
+    public void deleteArticle(Long articleId, String authorization){
+        Article article=articleRepository.findById(articleId)
+                .orElseThrow(()->new CustomException(404,"해당 ID의 게시글을 찾을 수 없습니다."));
+
+        Long userId = jwtTokenProvider.getUserIdFromAuthorization(authorization);
+
+        if (!article.getUser().getId().equals(userId)) {
+            throw new CustomException(403, "해당 글에 대한 삭제 권한이 없습니다.");
+        }
+
+        articleRepository.delete(article);
     }
 }

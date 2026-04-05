@@ -36,7 +36,7 @@ public class ArticleController {
     /* 게시글 수정 */
     @PutMapping("/{articleId}")
     public ResponseEntity<ApiResponse<ArticleResponse>> updateArticle(
-            @RequestHeader(value = "Authorization", required = false) String authorization,
+            @RequestHeader("Authorization") String authorization,
             @RequestBody UpdateArticleRequest request,
             @PathVariable Long articleId
             ){
@@ -47,6 +47,15 @@ public class ArticleController {
                 .body(new ApiResponse<>(true, HttpStatus.OK.value(), "게시글 수정 성공", null));
     }
 
+    /* 게시글 삭제 */
+    @DeleteMapping("/{articleId}")
+    public ResponseEntity<ApiResponse<String>> deleteArticle(
+            @RequestHeader("Authorization") String authorization,
+            @PathVariable Long articleId
+            ){
+        jwtTokenProvider.validateAuthorizationHeader(authorization);
+
+    }
     /* 게시글 전체 조회 */
 //    @GetMapping()
 //    public ResponseEntity<ApiResponse>

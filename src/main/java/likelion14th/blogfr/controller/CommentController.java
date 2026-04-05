@@ -22,8 +22,9 @@ public class CommentController {
     /* 댓글 생성 */
     @PostMapping("/{articleId}")
     public ResponseEntity<ApiResponse<CommentResponse>> addComment(
-            @RequestHeader(value = "Authorization", required = false) String authorization,
-            @PathVariable Long articleId, @RequestBody AddCommentRequest request
+            @RequestHeader("Authorization") String authorization,
+            @PathVariable Long articleId,
+            @RequestBody AddCommentRequest request
     ){
         jwtTokenProvider.validateAuthorizationHeader(authorization);
 
@@ -36,7 +37,7 @@ public class CommentController {
     /* 댓글 삭제 */
     @DeleteMapping("/{commentId}")
     public ResponseEntity<ApiResponse<String>> deleteComment(
-            @RequestHeader(value = "Authorization", required = false) String authorization,
+            @RequestHeader("Authorization") String authorization,
             @PathVariable Long commentId
     ){
         jwtTokenProvider.validateAuthorizationHeader(authorization);
