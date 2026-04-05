@@ -2,6 +2,7 @@ package likelion14th.blogfr.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,4 +29,12 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Builder
+    public Comment(Article article, String content, User user) {
+        this.article = article;
+        this.content = content;
+        this.user = user;
+        this.createdAt = LocalDateTime.now();
+    }
 }

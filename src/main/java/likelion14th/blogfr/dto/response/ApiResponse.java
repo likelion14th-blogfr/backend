@@ -1,10 +1,12 @@
 package likelion14th.blogfr.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@JsonPropertyOrder({ "success", "code", "message", "data" })
 public class ApiResponse<T>{
         private boolean success;
         private int code;

@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ArticleCreateRequest {
-    private String title;
+public class AddCommentRequest {
     private String content;
 }

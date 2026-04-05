@@ -18,10 +18,10 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
-        User user = userRepository.findByLoginId(request.loginId())
+        User user = userRepository.findByLoginId(request.getLoginId())
                 .orElseThrow(() -> new CustomException(404, "존재하지 않는 사용자입니다."));
 
-        if (!user.getPassword().equals(request.password())) {
+        if (!user.getPassword().equals(request.getPassword())) {
             throw new CustomException(401, "비밀번호가 틀렸습니다.");
         }
 

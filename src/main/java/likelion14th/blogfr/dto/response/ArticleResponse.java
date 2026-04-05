@@ -1,0 +1,35 @@
+package likelion14th.blogfr.dto.response;
+
+import likelion14th.blogfr.domain.Article;
+import likelion14th.blogfr.domain.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Builder
+@AllArgsConstructor
+public class ArticleResponse {
+
+    private final Long id;
+    private final String title;
+    private final String content;
+    private final String author;
+    private final LocalDateTime createdAt;
+    private final Integer totalLikes;
+    private final Integer totalComments;
+
+    public static ArticleResponse of(Article article) {
+        return ArticleResponse.builder()
+                .id(article.getId())
+                .title(article.getTitle())
+                .content(article.getContent())
+                .author(article.getUser().getNickname())
+                .createdAt(article.getCreatedAt())
+                .totalLikes(article.getLikeCount())
+                .totalComments(article.getCommentCount())
+                .build();
+    }
+}
