@@ -40,7 +40,7 @@ public class CommentController {
             @PathVariable Long commentId
     ){
         jwtTokenProvider.validateAuthorizationHeader(authorization);
-        commentService.deleteComment(commentId);
+        commentService.deleteComment(commentId, authorization);
 
         return ResponseEntity.ok(
                 new ApiResponse<>(true, HttpStatus.OK.value(), "댓글 삭제 성공", null)

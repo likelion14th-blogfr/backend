@@ -41,4 +41,12 @@ public class JwtTokenProvider {
         }
     }
 
+    public Long getUserIdFromAuthorization(String authorization) {
+        validateAuthorizationHeader(authorization);
+
+        String token = authorization.substring(7);
+        String userIdPart = token.substring(6);
+
+        return Long.parseLong(userIdPart);
     }
+}

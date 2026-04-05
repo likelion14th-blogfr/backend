@@ -18,8 +18,8 @@ public class ArticleResponse {
     private final String content;
     private final String author;
     private final LocalDateTime createdAt;
-    private final Integer likes;
-    private final Integer comments;
+    private final Integer totalLikes;
+    private final Integer totalComments;
 
     public static ArticleResponse of(Article article) {
         return ArticleResponse.builder()
@@ -28,8 +28,8 @@ public class ArticleResponse {
                 .content(article.getContent())
                 .author(article.getUser().getNickname())
                 .createdAt(article.getCreatedAt())
-                .likes(article.getLikeCount())
-                .comments(article.getCommentCount())
+                .totalLikes(article.getLikeCount())
+                .totalComments(article.getCommentCount())
                 .build();
     }
 }

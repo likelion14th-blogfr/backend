@@ -1,6 +1,7 @@
 package likelion14th.blogfr.controller;
 
 import likelion14th.blogfr.config.JwtTokenProvider;
+import likelion14th.blogfr.dto.request.UpdateArticleRequest;
 import likelion14th.blogfr.dto.response.ArticleResponse;
 import likelion14th.blogfr.service.ArticleService;
 import likelion14th.blogfr.dto.request.AddArticleRequest;
@@ -30,6 +31,17 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse<>(true, HttpStatus.CREATED.value(), "게시글 등록 성공",response)
         );
+    }
+
+    /* 게시글 수정 */
+    @PutMapping("/{articleId}")
+    public ResponseEntity<ApiResponse<ArticleResponse>> updateArticle(
+            @RequestHeader(value = "Authorization", required = false) String authorization,
+            @RequestBody UpdateArticleRequest request
+            ){
+        jwtTokenProvider.validateAuthorizationHeader(authorization);
+
+
     }
 
     /* 게시글 전체 조회 */

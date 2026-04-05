@@ -1,6 +1,7 @@
 package likelion14th.blogfr.service;
 
 import jakarta.transaction.Transactional;
+import likelion14th.blogfr.config.JwtTokenProvider;
 import likelion14th.blogfr.domain.Article;
 import likelion14th.blogfr.domain.Comment;
 import likelion14th.blogfr.domain.User;
@@ -20,6 +21,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public CommentResponse addComment(Long articleId, AddCommentRequest request){
         Article article = articleRepository.findById(articleId)
@@ -37,11 +39,18 @@ public class CommentService {
         return CommentResponse.of(comment);
     }
 
-    public void deleteComment(Long commentId){
+    public void deleteComment(Long commentId, String authorization){
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(()-> new CustomException(404, "댓글이 존재하지 않습니다."));
+
+        Long userId = jwtTokenProvider.getUserIdFromAuthorization(authorization);
+
+        if (!comment.getUser().getId().equals(userId)) {
+            throw new CustomException(403, "해당 댓글에 대한 삭제 권한이 없습니다.");
+        }
+
         Article article = comment.getArticle();
         commentRepository.delete(comment);
-        article.increaseCommentCount();
+        article.decreaseCommentCount();
     }
 }
