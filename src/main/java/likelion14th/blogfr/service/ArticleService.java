@@ -75,6 +75,8 @@ public class ArticleService {
             throw new CustomException(403, "해당 글에 대한 삭제 권한이 없습니다.");
         }
 
+        commentRepository.deleteAllByArticleId(articleId);
+        articleLikeRepository.deleteAllByArticleId(articleId);
         articleRepository.delete(article);
     }
 
