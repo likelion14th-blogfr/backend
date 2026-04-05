@@ -22,4 +22,9 @@ public class ArticleLike {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public ArticleLike(Article article, User user) {
+        this.article = article;
+        this.user = user;
+    }
 }
