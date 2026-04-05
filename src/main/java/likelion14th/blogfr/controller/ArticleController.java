@@ -37,11 +37,14 @@ public class ArticleController {
     @PutMapping("/{articleId}")
     public ResponseEntity<ApiResponse<ArticleResponse>> updateArticle(
             @RequestHeader(value = "Authorization", required = false) String authorization,
-            @RequestBody UpdateArticleRequest request
+            @RequestBody UpdateArticleRequest request,
+            @PathVariable Long articleId
             ){
         jwtTokenProvider.validateAuthorizationHeader(authorization);
+        articleService.updateArticle(articleId, request, authorization);
 
-
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, HttpStatus.OK.value(), "게시글 수정 성공", null));
     }
 
     /* 게시글 전체 조회 */
