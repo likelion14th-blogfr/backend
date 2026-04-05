@@ -1,17 +1,23 @@
 package likelion14th.blogfr.service;
 
-import jakarta.transaction.Transactional;
 import likelion14th.blogfr.config.JwtTokenProvider;
 import likelion14th.blogfr.domain.Article;
 import likelion14th.blogfr.domain.User;
 import likelion14th.blogfr.dto.request.AddArticleRequest;
 import likelion14th.blogfr.dto.request.UpdateArticleRequest;
+import likelion14th.blogfr.dto.response.ArticleDetailResponse;
 import likelion14th.blogfr.dto.response.ArticleResponse;
+import likelion14th.blogfr.dto.response.CommentResponse;
 import likelion14th.blogfr.exception.CustomException;
+import likelion14th.blogfr.repository.ArticleLikeRepository;
 import likelion14th.blogfr.repository.ArticleRepository;
+import likelion14th.blogfr.repository.CommentRepository;
 import likelion14th.blogfr.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -19,6 +25,8 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final CommentRepository commentRepository;
+    private final ArticleLikeRepository articleLikeRepository;
 
     /* 게시글 생성 */
     @Transactional
@@ -69,4 +77,46 @@ public class ArticleService {
 
         articleRepository.delete(article);
     }
+
+    /* 게시글 전체 조회 */
+    @Transactional(readOnly = true)
+    public List<ArticleResponse> getAllArticles(){
+        List<Article> articleList = articleRepository.findAll();
+        List<ArticleResponse> articleResponseList = articleList.stream()
+                .map(article -> ArticleResponse.of(article))
+                .toList();
+
+        return articleResponseList;
+    }
+
+    /* 게시글 개별 조회 */
+    @Transactional(readOnly = true)
+    public ArticleDetailResponse getArticle(Long articleId, String authorization){
+        Article article=articleRepository.findById(articleId)
+                .orElseThrow(()->new CustomException(404,"해당 ID의 게시글을 찾을 수 없습니다."));
+
+        List<CommentResponse> comments = commentRepository.findAllByArticleId(articleId).stream()
+                .map(CommentResponse::of)
+                .toList();
+
+        boolean isLiked = false;
+
+        if (authorization != null && !authorization.isBlank()) {
+            Long userId = jwtTokenProvider.getUserIdFromAuthorization(authorization);
+            isLiked = articleLikeRepository.existsByArticleIdAndUserId(articleId, userId);
+        }
+
+        return ArticleDetailResponse.builder()
+                .id(article.getId())
+                .title(article.getTitle())
+                .content(article.getContent())
+                .author(article.getUser().getNickname())
+                .createdAt(article.getCreatedAt())
+                .totalLikes(article.getLikeCount())
+                .totalComments(article.getCommentCount())
+                .comments(comments)
+                .isLiked(isLiked)
+                .build();
+    }
+
 }

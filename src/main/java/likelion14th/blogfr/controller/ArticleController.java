@@ -2,6 +2,7 @@ package likelion14th.blogfr.controller;
 
 import likelion14th.blogfr.config.JwtTokenProvider;
 import likelion14th.blogfr.dto.request.UpdateArticleRequest;
+import likelion14th.blogfr.dto.response.ArticleDetailResponse;
 import likelion14th.blogfr.dto.response.ArticleResponse;
 import likelion14th.blogfr.service.ArticleService;
 import likelion14th.blogfr.dto.request.AddArticleRequest;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -60,7 +63,26 @@ public class ArticleController {
                 .body(new ApiResponse<>(true, HttpStatus.OK.value(), "게시글 삭제 성공", null));
     }
     /* 게시글 전체 조회 */
-//    @GetMapping()
-//    public ResponseEntity<ApiResponse>
+    @GetMapping()
+    public ResponseEntity<ApiResponse<List<ArticleResponse>>> getAllArticles(){
+        List<ArticleResponse> response = articleService.getAllArticles();
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, HttpStatus.OK.value(), "전체 게시글 조회 성공", response)
+        );
+    }
+
+    /* 게시글 개별 조회 */
+    @GetMapping("/{articleId}")
+    public ResponseEntity<ApiResponse<ArticleDetailResponse>> getArticle(
+            @RequestHeader("Authorization") String authorization,
+            @PathVariable Long articleId
+            ){
+        jwtTokenProvider.validateAuthorizationHeader(authorization);
+        ArticleDetailResponse response =articleService.getArticle(articleId, authorization);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, HttpStatus.OK.value(), "게시글 조회 성공", response));
+    }
 
 }
