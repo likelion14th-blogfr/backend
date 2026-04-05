@@ -25,7 +25,7 @@ public class LikeController {
             @PathVariable Long articleId
             ){
         jwtTokenProvider.validateAuthorizationHeader(authorization);
-        likeService.addLike(articleId);
+        likeService.addLike(articleId, authorization);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse<>(true, HttpStatus.CREATED.value(), "좋아요 생성 성공", null));

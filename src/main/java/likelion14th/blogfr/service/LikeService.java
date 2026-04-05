@@ -25,11 +25,13 @@ public class LikeService {
 
     /* 좋아요 생성 */
     @Transactional
-    public void addLike(Long articleId) {
+    public void addLike(Long articleId, String authorization) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new CustomException(404, "게시글이 존재하지 않습니다."));
 
-        User user = userRepository.findById(1L)
+        Long userId = jwtTokenProvider.getUserIdFromAuthorization(authorization);
+
+        User user = userRepository.findById(userId)
                 .orElseThrow(()-> new CustomException(404, "사용자가 존재하지 않습니다."));
 
         if (articleLikeRepository.existsByArticleIdAndUserId(articleId, user.getId())) {
