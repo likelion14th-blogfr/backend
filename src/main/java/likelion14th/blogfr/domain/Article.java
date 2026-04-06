@@ -3,7 +3,6 @@ package likelion14th.blogfr.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.swing.text.html.parser.DTD;
 import java.time.LocalDateTime;
 
 @Getter
@@ -32,13 +31,13 @@ public class Article {
     private int likeCount;
 
     @Builder
-    public Article(String title, String content, LocalDateTime createdAt, int likeCount,int commentCount, User user) {
+    public Article(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.createdAt = LocalDateTime.now();
-        this.commentCount = commentCount;
+        this.commentCount = 0;
         this.user = user;
-        this.likeCount = likeCount;
+        this.likeCount = 0;
     }
 
     public void update(String title, String content) {

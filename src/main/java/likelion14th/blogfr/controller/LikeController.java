@@ -3,7 +3,6 @@ package likelion14th.blogfr.controller;
 import likelion14th.blogfr.config.JwtTokenProvider;
 import likelion14th.blogfr.dto.response.ApiResponse;
 import likelion14th.blogfr.dto.response.ArticleResponse;
-import likelion14th.blogfr.service.ArticleService;
 import likelion14th.blogfr.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class LikeController {
     }
 
     /* 좋아요 취소 */
-    @DeleteMapping("{articleId}")
+    @DeleteMapping("/{articleId}")
     public ResponseEntity<ApiResponse<ArticleResponse>> deleteLike(
             @RequestHeader("Authorization") String authorization,
             @PathVariable Long articleId

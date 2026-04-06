@@ -1,6 +1,5 @@
 package likelion14th.blogfr.repository;
 
-import likelion14th.blogfr.domain.Comment;
 import likelion14th.blogfr.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

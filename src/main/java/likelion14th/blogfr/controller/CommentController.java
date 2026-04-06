@@ -4,7 +4,6 @@ import likelion14th.blogfr.config.JwtTokenProvider;
 import likelion14th.blogfr.dto.request.AddCommentRequest;
 import likelion14th.blogfr.dto.response.ApiResponse;
 import likelion14th.blogfr.dto.response.CommentResponse;
-import likelion14th.blogfr.repository.CommentRepository;
 import likelion14th.blogfr.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
