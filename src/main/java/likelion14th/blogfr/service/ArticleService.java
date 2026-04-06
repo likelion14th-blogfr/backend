@@ -39,8 +39,6 @@ public class ArticleService {
                 .title(request.getTitle())
                 .content(request.getContent())
                 .user(user)
-                .likeCount(0)
-                .commentCount(0)
                 .build();
 
         Article saved =  articleRepository.save(article);

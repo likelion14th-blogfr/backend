@@ -1,7 +1,6 @@
 package likelion14th.blogfr.dto.response;
 
 import likelion14th.blogfr.domain.Article;
-import likelion14th.blogfr.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
