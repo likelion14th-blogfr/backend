@@ -29,7 +29,7 @@ public class ArticleController {
             @RequestBody AddArticleRequest request){
         jwtTokenProvider.validateAuthorizationHeader(authorization);
 
-        ArticleResponse response = articleService.addArticle(request);
+        ArticleResponse response = articleService.addArticle(request, authorization);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse<>(true, HttpStatus.CREATED.value(), "게시글 등록 성공",response)

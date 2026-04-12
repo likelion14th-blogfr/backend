@@ -30,9 +30,11 @@ public class ArticleService {
 
     /* 게시글 생성 */
     @Transactional
-    public ArticleResponse addArticle(AddArticleRequest request){
+    public ArticleResponse addArticle(AddArticleRequest request, String authorization){
 
-        User user = userRepository.findById(1L)
+        Long userId = jwtTokenProvider.getUserIdFromAuthorization(authorization);
+
+        User user = userRepository.findById(userId)
                 .orElseThrow(()-> new CustomException(404, "사용자를 찾을 수 없습니다."));
 
         Article article = Article.builder()

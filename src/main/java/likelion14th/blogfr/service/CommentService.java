@@ -25,11 +25,13 @@ public class CommentService {
 
     /* 댓글 작성 */
     @Transactional
-    public CommentResponse addComment(Long articleId, AddCommentRequest request){
+    public CommentResponse addComment(Long articleId, AddCommentRequest request, String authorization) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new CustomException(404, "게시글이 존재하지 않습니다."));
 
-        User user = userRepository.findById(1L)
+        Long userId = jwtTokenProvider.getUserIdFromAuthorization(authorization);
+
+        User user = userRepository.findById(userId)
                 .orElseThrow(()-> new CustomException(404, "사용자가 존재하지 않습니다."));
 
         Comment comment = new Comment(article, request.getContent(), user);
