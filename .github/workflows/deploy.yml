@@ -2,7 +2,7 @@ name: Java CI with Gradle and Deploy
 
 on:
   push:
-    branches: [ "main" ] # main 브랜치에 푸시될 때 실행
+    branches: [ "main" ]
 
 jobs:
   build-and-deploy:
@@ -18,29 +18,32 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # 2. Gradle 빌드 (테스트 제외하고 빌드 시간을 단축)
+      # 2. Gradle 빌드
       - name: Build with Gradle
         run: |
           chmod +x ./gradlew
           ./gradlew clean build -x test
 
-      # 3. 빌드된 Jar 파일을 서버로 전송 및 실행
+      # 3. 빌드된 실행 가능한 Jar 파일만 서버로 전송
       - name: Deploy to Server
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.REMOTE_IP }}
-          username: ${{ secrets.REMOTE_USER }}
+          host: 163.239.77.99
+          username: sogang039
           password: ${{ secrets.REMOTE_PASSWORD }}
-          source: "build/libs/*.jar"
-          target: "/home/${{ secrets.REMOTE_USER }}/deploy"
+          # plain 파일은 제외하고 실행 파일만  전송
+          source: "build/libs/blogfr-0.0.1-SNAPSHOT.jar"
+          target: "/home/sogang039/backend"
 
-      # 4. 서버에서 이전 프로세스 죽이고 새로 실행
+      # 4. 서버에서 실행
       - name: Execute Server
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.REMOTE_IP }}
-          username: ${{ secrets.REMOTE_USER }}
+          host: 163.239.77.99
+          username: sogang039
           password: ${{ secrets.REMOTE_PASSWORD }}
           script: |
+            # 기존 8080 프로세스 종료
             fuser -k 8080/tcp || true
-            nohup java -jar /home/${{ secrets.REMOTE_USER }}/deploy/build/libs/*.jar > /home/${{ secrets.REMOTE_USER }}/deploy/log.txt 2>&1 &
+            # 새 서버 실행
+            nohup java -jar /home/sogang039/backend/build/libs/blogfr-0.0.1-SNAPSHOT.jar > /home/sogang039/backend/nohup.out 2>&1 &
