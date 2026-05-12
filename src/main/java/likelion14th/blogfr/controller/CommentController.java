@@ -27,7 +27,7 @@ public class CommentController {
     ){
         jwtTokenProvider.validateAuthorizationHeader(authorization);
 
-        CommentResponse response = commentService.addComment(articleId, request);
+        CommentResponse response = commentService.addComment(articleId, request, authorization);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse<>(true, HttpStatus.CREATED.value(), "댓글 등록 성공", response));
